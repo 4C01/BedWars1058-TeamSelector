@@ -31,7 +31,6 @@ public class TeamSelectorAssigner implements ITeamAssigner {
             PlayerGroup group = new PlayerGroup(arena, preference);
             for (Player player : registeredPreference.getMembers(preference)) {
                 group.addPlayer(player);
-                players.remove(player);
             }
             playerGroups.add(group);
         }
@@ -43,10 +42,8 @@ public class TeamSelectorAssigner implements ITeamAssigner {
             if (targetTeam != null && targetTeam.getMembers().size() + group.getMembers().size() <= arena.getMaxInTeam()) {
                 for (Player player : group.getMembers()) {
                     targetTeam.addPlayers(player);
+                    players.remove(player);
                     callTeamAssignEvent(player, targetTeam, arena);
-                }
-                if (targetTeam.getMembers().size() == arena.getMaxInTeam()) {
-                    teams.remove(targetTeam);
                 }
             }
         }
@@ -70,8 +67,6 @@ public class TeamSelectorAssigner implements ITeamAssigner {
     private void assignToTwoTeams(IArena arena, List<Player> players, List<ITeam> teams) {
         List<ITeam> targetTeams = findTwoTargetTeams(teams);
         if (targetTeams.size() < 2) return;
-
-        targetTeams.subList(2, targetTeams.size()).clear();
 
         int max = arena.getMaxInTeam();
         // 只保留未满的队伍
