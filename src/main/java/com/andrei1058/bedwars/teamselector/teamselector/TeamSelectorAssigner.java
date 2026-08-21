@@ -52,7 +52,7 @@ public class TeamSelectorAssigner implements ITeamAssigner {
         Collections.shuffle(players);
 
         // 根据人数选择分配策略
-        if (playerCount == 2 || playerCount == 4 || playerCount == 6 || playerCount == 8) {
+        if (playerCount == 2 || playerCount == 4 || playerCount == 5 || playerCount == 6 || playerCount == 8) {
             // 平均分配到两个指定队伍
             assignToTwoTeams(arena, players, teams);
         } else {
